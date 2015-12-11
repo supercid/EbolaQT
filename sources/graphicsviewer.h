@@ -19,10 +19,14 @@ class GraphicsViewer : public QGraphicsView {
         void setState(int x,int y,int s);
         int width();
         int height();
+
         QColor activeColor();
         QColor inactiveColor();
+        QColor recoveredColor();
+
         void newActiveColor();
         void newInactiveColor();
+        void newRecoveredColor();
         void setDefaultColor();
     public slots :
         void clear();
@@ -48,6 +52,8 @@ class GraphicsViewer : public QGraphicsView {
 
         QColor m_activeColor;
         QColor m_inactiveColor;
+        QColor m_recoveredColor;
+
 };
 
 #endif

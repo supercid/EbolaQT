@@ -133,12 +133,18 @@ void MainWindow::nextTurn() {
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
             int n = numberOfNeighboor(x,y,m_view->state());
-            if (n < 2)
-                nextState[x][y] = false;
-            if (n == 3)
-                nextState[x][y] = true;
-            if (n > 3)
-                nextState[x][y] = false;
+            if (n == 1){
+                nextState[x][y] = 1;
+            }
+            if (n == 2 ){
+                nextState[x][y] = 2;
+            }
+            if (n == 3 ){
+                nextState[x][y] = 0;
+            }
+            if (n == 4 ){
+
+            }
         }
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {

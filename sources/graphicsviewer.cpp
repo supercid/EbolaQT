@@ -51,6 +51,10 @@ QColor GraphicsViewer::inactiveColor() {
     return m_inactiveColor;
 }
 
+QColor GraphicsViewer::recoveredColor() {
+    return m_recoveredColor;
+}
+
 void GraphicsViewer::newActiveColor() {
     QColor color = QColorDialog::getColor(m_activeColor);
     if (color.isValid() && color != m_activeColor) {
@@ -71,6 +75,17 @@ void GraphicsViewer::newInactiveColor() {
     }
 }
 
+void GraphicsViewer::newRecoveredColor() {
+    QColor color = QColorDialog::getColor(m_recoveredColor);
+    if (color.isValid() && color != m_recoveredColor) {
+        m_recoveredColor = color;
+        for (int y = 0; y < m_amountHeight; y++)
+            for (int x = 0; x < m_amountWidth; x++)
+                setState(x,y,m_state[x][y]);
+    }
+}
+
+
 void GraphicsViewer::setDefaultColor() {
     m_activeColor = QColor("red");
     m_inactiveColor = QColor("white");
@@ -82,7 +97,7 @@ void GraphicsViewer::setDefaultColor() {
 void GraphicsViewer::clear() {
     for (int y = 0; y < m_amountHeight; y++)
         for (int x = 0; x < m_amountWidth; x++)
-            setState(x,y,0);
+            setState(x,y,1);
 }
 
 QList<QList<int> >& GraphicsViewer::state() {
@@ -90,8 +105,15 @@ QList<QList<int> >& GraphicsViewer::state() {
 }
 
 void GraphicsViewer::setState(int x,int y,int s) {
-    if (s) m_grid[x][y]->setBrush(QBrush(m_activeColor,Qt::SolidPattern));
-    else m_grid[x][y]->setBrush(QBrush(m_inactiveColor,Qt::SolidPattern));
+
+    if (s == 0 ){ //If state is infected
+        m_grid[x][y]->setBrush(QBrush(m_activeColor,Qt::SolidPattern));
+    }else if (s == 1){// If state is Susceptible/Alive
+        m_grid[x][y]->setBrush(QBrush(m_inactiveColor,Qt::SolidPattern));
+    }else if (s == 2){ // if state is recovered
+        m_grid[x][y]->setBrush(QBrush(m_recoveredColor,Qt::SolidPattern));
+    }
+
     m_state[x][y] = s;
 }
 
