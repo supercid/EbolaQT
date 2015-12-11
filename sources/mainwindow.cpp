@@ -11,15 +11,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
         font.setBold(true);
 
     m_numX = new QSpinBox;
-        m_numX->setMinimum(3);
+        m_numX->setMaximum(300);
         if (settings.contains("width"))
             m_numX->setValue(settings.value("width").toInt());
-        else m_numX->setValue(50);
+        else m_numX->setValue(300);
     m_numY = new QSpinBox;
-        m_numY->setMinimum(3);
+        m_numY->setMaximum(200);
         if (settings.contains("height"))
             m_numY->setValue(settings.value("height").toInt());
-        else m_numY->setValue(30);
+        else m_numY->setValue(200);
     m_reset = new QPushButton(tr("Reset with new size"));
         m_reset->setFont(font);
     m_state = new QPushButton(tr("Start"));
@@ -53,7 +53,7 @@ void MainWindow::reset(bool isAtStartup) {
         return;
     if (m_view != 0)
         delete m_view;
-    m_view = new GraphicsViewer(m_numX->value(),m_numY->value(),10,10);
+    m_view = new GraphicsViewer(m_numX->value(),m_numY->value(),3,3);
     if (isAtStartup) {
         connect(m_reset,SIGNAL(clicked()),this,SLOT(reset()));
         connect(m_state,SIGNAL(clicked()),this,SLOT(stateChange()));

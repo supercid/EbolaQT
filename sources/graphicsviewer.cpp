@@ -7,7 +7,7 @@ GraphicsViewer::GraphicsViewer(int amountWidth,int amountHeight,int width,int he
     else m_activeColor = QColor("red");
     if (settings.contains("na_color"))
         m_inactiveColor = settings.value("na_color").value<QColor>();
-    else m_inactiveColor = QColor("white");
+    else m_inactiveColor = QColor("black");
 
     m_amountWidth = amountWidth;
     m_amountHeight = amountHeight;
