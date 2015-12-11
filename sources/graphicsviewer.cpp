@@ -7,7 +7,11 @@ GraphicsViewer::GraphicsViewer(int amountWidth,int amountHeight,int width,int he
     else m_activeColor = QColor("red");
     if (settings.contains("na_color"))
         m_inactiveColor = settings.value("na_color").value<QColor>();
-    else m_inactiveColor = QColor("black");
+    else m_inactiveColor = QColor("orange");
+    if (settings.contains("r_color"))
+        m_recoveredColor = settings.value("r_color").value<QColor>();
+    else m_recoveredColor = QColor("blue");
+
 
     m_amountWidth = amountWidth;
     m_amountHeight = amountHeight;
@@ -89,6 +93,7 @@ void GraphicsViewer::newRecoveredColor() {
 void GraphicsViewer::setDefaultColor() {
     m_activeColor = QColor("red");
     m_inactiveColor = QColor("white");
+    m_recoveredColor = QColor("blue");
     for (int y = 0; y < m_amountHeight; y++)
         for (int x = 0; x < m_amountWidth; x++)
             setState(x,y,m_state[x][y]);
@@ -110,7 +115,7 @@ void GraphicsViewer::setState(int x,int y,int s) {
         m_grid[x][y]->setBrush(QBrush(m_activeColor,Qt::SolidPattern));
     }else if (s == 1){// If state is Susceptible/Alive
         m_grid[x][y]->setBrush(QBrush(m_inactiveColor,Qt::SolidPattern));
-    }else if (s == 2){ // if state is recovered
+    }else if (s == 2){ // if state is Recovered
         m_grid[x][y]->setBrush(QBrush(m_recoveredColor,Qt::SolidPattern));
     }
 

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings(qApp->organizationName(),qApp->applicationName());
@@ -43,6 +44,7 @@ void MainWindow::saveSettings() {
     if (!settings.contains("remember")) return;
     settings.setValue("a_color",m_view->activeColor());
     settings.setValue("na_color",m_view->inactiveColor());
+    settings.setValue("r_color",m_view->recoveredColor());
     settings.setValue("speed",m_speed->value());
     settings.setValue("width",m_numX->value());
     settings.setValue("height",m_numY->value());
@@ -133,17 +135,26 @@ void MainWindow::nextTurn() {
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
             int n = numberOfNeighboor(x,y,m_view->state());
+            float timess = ((float)rand() / ((float)RAND_MAX + 1) * 2) + 25.0;
+
             if (n == 1){
-                nextState[x][y] = 1;
+                if (timess > 25){
+                    nextState[x][y] = 1;
+                }
+//                printf("testando aqui: %f\n",timess);
             }
             if (n == 2 ){
-                nextState[x][y] = 2;
+                if (timess > 50){
+                    nextState[x][y] = 2;
+                }
             }
             if (n == 3 ){
-                nextState[x][y] = 0;
+                if (timess > 75){
+                    nextState[x][y] = 1;
+                }
             }
             if (n == 4 ){
-
+                nextState[x][y] = 0;
             }
         }
     for (int y = 0; y < m_view->height(); y++)
