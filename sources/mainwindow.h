@@ -34,7 +34,9 @@
             void reset(bool isAtStartup = false);
             void callNAColor();
             void callAColor();
-            void callDefColor();
+            void callRColor();
+
+//            void callDefColor();
         private :
             int numberOfNeighboor(int x,int y,const QList<QList<int> >& state);
         private :

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <iostream>
+#include "time.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings(qApp->organizationName(),qApp->applicationName());
@@ -101,12 +102,20 @@ void MainWindow::callAColor() {
     saveSettings();
 }
 
-void MainWindow::callDefColor() {
+void MainWindow::callRColor() {
     if (m_active) m_timer->stop();
-    m_view->setDefaultColor();
+    m_view->newRecoveredColor();
     if (m_active) m_timer->start();
     saveSettings();
 }
+
+
+//void MainWindow::callDefColor() {
+//    if (m_active) m_timer->stop();
+//    m_view->setDefaultColor();
+//    if (m_active) m_timer->start();
+//    saveSettings();
+//}
 
 void MainWindow::adjustToMinimalSize() {
     resize(1,1);
@@ -132,35 +141,44 @@ void MainWindow::stateChange() {
 
 void MainWindow::nextTurn() {
     QList<QList<int> > nextState = m_view->state();
+    int timess = 0;
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
             int n = numberOfNeighboor(x,y,m_view->state());
-            float timess = ((float)rand() / ((float)RAND_MAX + 1) * 2) + 25.0;
-
             if (n == 1){
-                if (timess > 25){
+                srand(time(NULL));
+                timess = rand() % 4 + 1;
+//                printf("1 neighbours: %i\n",timess);
+                if (timess == 1){
                     nextState[x][y] = 1;
                 }
-//                printf("testando aqui: %f\n",timess);
             }
             if (n == 2 ){
-                if (timess > 50){
-                    nextState[x][y] = 2;
+                srand(time(NULL));
+                timess = rand() % 4 + 1;
+//                printf("2 neighbours: %i\n",timess);
+                if (timess == 1 || timess == 2 ){
+                    nextState[x][y] = 0;
                 }
             }
             if (n == 3 ){
-                if (timess > 75){
-                    nextState[x][y] = 1;
+                srand(time(NULL));
+                timess = rand() % 4 + 1;
+//                printf("3 neighbours: %i\n",timess);
+                if (timess == 1 || timess == 2 || timess == 3){
+                    nextState[x][y] = 0;
                 }
             }
             if (n == 4 ){
                 nextState[x][y] = 0;
             }
         }
+
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
-            if (nextState[x][y] != m_view->state()[x][y])
+            if (nextState[x][y] != m_view->state()[x][y]){
                 m_view->setState(x,y,nextState[x][y]);
+            }
         }
 }
 

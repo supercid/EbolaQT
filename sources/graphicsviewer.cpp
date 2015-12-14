@@ -7,7 +7,7 @@ GraphicsViewer::GraphicsViewer(int amountWidth,int amountHeight,int width,int he
     else m_activeColor = QColor("red");
     if (settings.contains("na_color"))
         m_inactiveColor = settings.value("na_color").value<QColor>();
-    else m_inactiveColor = QColor("orange");
+    else m_inactiveColor = QColor("black");
     if (settings.contains("r_color"))
         m_recoveredColor = settings.value("r_color").value<QColor>();
     else m_recoveredColor = QColor("blue");
