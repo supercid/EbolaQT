@@ -170,7 +170,7 @@ void MainWindow::nextTurn() {
                 }
             }
             if (n == 4 ){
-                nextState[x][y] = 0;
+                nextState[x][y] = 2;
             }
         }
 

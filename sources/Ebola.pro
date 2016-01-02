@@ -3,6 +3,8 @@ TEMPLATE = app
 QT += widgets
 SOURCES += main.cpp \
     mainwindow.cpp \
-    graphicsviewer.cpp
+    graphicsviewer.cpp \
+    thread.cpp
 HEADERS += mainwindow.h \
-    graphicsviewer.h
+    graphicsviewer.h \
+    thread.h
