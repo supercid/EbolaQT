@@ -31,6 +31,7 @@
             void setInterval(int value);
             void stateChange();
             void nextTurn();
+            void nextTurnMedicine();
             void reset(bool isAtStartup = false);
             void callNAColor();
             void callAColor();
@@ -50,6 +51,7 @@
             QPushButton* m_state;
             QPushButton* m_fill;
             QPushButton* m_next;
+            QPushButton* m_nextM;
             QPushButton* m_reverse;
             QPushButton* m_clear;
             QSlider* m_speed;

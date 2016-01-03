@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <iostream>
 #include "time.h"
+#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings(qApp->organizationName(),qApp->applicationName());
@@ -28,6 +30,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
         m_state->setFont(font);
     m_next = new QPushButton(tr("Next Turn"));
         m_next->setFont(font);
+    m_nextM = new QPushButton(tr("Apply Medicine"));
+        m_nextM->setFont(font);
+
     m_clear = new QPushButton(tr("Clear"));
         m_clear->setFont(font);
     m_speed = new QSlider(Qt::Horizontal);
@@ -62,6 +67,10 @@ void MainWindow::reset(bool isAtStartup) {
         connect(m_state,SIGNAL(clicked()),this,SLOT(stateChange()));
         connect(m_next,SIGNAL(clicked()),this,SLOT(nextTurn()));
         connect(m_timer,SIGNAL(timeout()),this,SLOT(nextTurn()));
+
+        connect(m_nextM,SIGNAL(clicked()),this,SLOT(nextTurnMedicine()));
+        connect(m_timer,SIGNAL(timeout()),this,SLOT(nextTurnMedicine()));
+
         connect(m_speed,SIGNAL(valueChanged(int)),this,SLOT(setInterval(int)));
     }
     connect(m_clear,SIGNAL(clicked()),m_view,SLOT(clear()));
@@ -77,6 +86,7 @@ void MainWindow::reset(bool isAtStartup) {
             QVBoxLayout* buttonLayout = new QVBoxLayout;
                 buttonLayout->addWidget(m_state);
                 buttonLayout->addWidget(m_next);
+                buttonLayout->addWidget(m_nextM);
                 buttonLayout->addWidget(m_clear);
             subMainLayout->addLayout(buttonLayout);
         mainLayout->addLayout(subMainLayout);
@@ -141,36 +151,36 @@ void MainWindow::stateChange() {
 
 void MainWindow::nextTurn() {
     QList<QList<int> > nextState = m_view->state();
+    //    0 is infected
+    //    1 is Susceptible/Alive
+    //    2 is Recovered
     int timess = 0;
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
             int n = numberOfNeighboor(x,y,m_view->state());
             if (n == 1){
-                srand(time(NULL));
                 timess = rand() % 4 + 1;
-//                printf("1 neighbours: %i\n",timess);
+                qDebug() << "1 neighbour: "<< timess;
                 if (timess == 1){
                     nextState[x][y] = 1;
                 }
             }
             if (n == 2 ){
-                srand(time(NULL));
                 timess = rand() % 4 + 1;
-//                printf("2 neighbours: %i\n",timess);
+                qDebug() << "2 neighbours: "<< timess;
                 if (timess == 1 || timess == 2 ){
                     nextState[x][y] = 0;
                 }
             }
             if (n == 3 ){
-                srand(time(NULL));
                 timess = rand() % 4 + 1;
-//                printf("3 neighbours: %i\n",timess);
+                qDebug() << "3 neighbours: "<< timess;
                 if (timess == 1 || timess == 2 || timess == 3){
                     nextState[x][y] = 0;
                 }
             }
             if (n == 4 ){
-                nextState[x][y] = 2;
+                nextState[x][y] = 0;
             }
         }
 
@@ -180,6 +190,10 @@ void MainWindow::nextTurn() {
                 m_view->setState(x,y,nextState[x][y]);
             }
         }
+}
+
+void MainWindow::nextTurnMedicine() {
+    QList<QList<int> > nextState = m_view->state();
 }
 
 int MainWindow::numberOfNeighboor(int rx,int ry,const QList<QList<int> >& state) {
