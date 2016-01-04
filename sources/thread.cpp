@@ -1,9 +1,6 @@
 #include "thread.h"
 #include <QtCore>
 #include <QDebug>
-#include "mainwindow.h"
-#include "mainwindow.cpp"
-#include "main.cpp"
 
 thread::thread(){
 }
