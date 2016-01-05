@@ -6,6 +6,7 @@ class thread : public QThread{
 public:
     thread();
     void run();
+    void runMedicine();
 };
 
 #endif // THREAD_H

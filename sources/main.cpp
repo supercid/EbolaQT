@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include "thread.h"
+#include <QtConcurrent/QtConcurrent>
 
 int main(int argc,char** argv) {
     QApplication app(argc, argv);
@@ -9,7 +10,10 @@ int main(int argc,char** argv) {
     app.setOrganizationDomain("http://www.itb.ie/");
     app.setOrganizationName("ITB");
     app.setApplicationVersion("0.1a");
-	
+
+    MainWindow w;
+    w.show();
+
     thread mThread1;
     mThread1.setObjectName("Infection");
     mThread1.start();
@@ -19,7 +23,6 @@ int main(int argc,char** argv) {
     mThread2.start();
 
 
-    MainWindow w;
-    w.show();
     return app.exec();
 }
+
