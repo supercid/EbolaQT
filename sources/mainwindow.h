@@ -27,7 +27,6 @@
             MainWindow(QWidget* parent = 0);
         public slots :
             void saveSettings();
-            void adjustToMinimalSize();
             void setInterval(int value);
             void stateChange();
             void nextTurn();
@@ -36,8 +35,6 @@
             void callNAColor();
             void callAColor();
             void callRColor();
-
-//            void callDefColor();
         private :
             int numberOfNeighboor(int x,int y,const QList<QList<int> >& state);
         private :

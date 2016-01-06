@@ -46,7 +46,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 void MainWindow::saveSettings() {
     QSettings settings(qApp->organizationName(),qApp->applicationName());
-//    if (!settings.contains("remember")) return;
     settings.setValue("a_color",m_view->activeColor());
     settings.setValue("na_color",m_view->inactiveColor());
     settings.setValue("r_color",m_view->recoveredColor());
@@ -66,10 +65,7 @@ void MainWindow::reset(bool isAtStartup) {
         connect(m_state,SIGNAL(clicked()),this,SLOT(stateChange()));
         connect(m_next,SIGNAL(clicked()),this,SLOT(nextTurn()));
         connect(m_timer,SIGNAL(timeout()),this,SLOT(nextTurn()));
-
         connect(m_nextM,SIGNAL(clicked()),this,SLOT(nextTurnMedicine()));
-//        connect(m_timer,SIGNAL(timeout()),this,SLOT(nextTurnMedicine()));
-
         connect(m_speed,SIGNAL(valueChanged(int)),this,SLOT(setInterval(int)));
     }
     connect(m_clear,SIGNAL(clicked()),m_view,SLOT(clear()));
@@ -93,7 +89,6 @@ void MainWindow::reset(bool isAtStartup) {
         dummy->setLayout(mainLayout);
     setCentralWidget(dummy);
 
-    QTimer::singleShot(500,this,SLOT(adjustToMinimalSize()));
     saveSettings();
 }
 
@@ -116,18 +111,6 @@ void MainWindow::callRColor() {
     m_view->newRecoveredColor();
     if (m_active) m_timer->start();
     saveSettings();
-}
-
-
-//void MainWindow::callDefColor() {
-//    if (m_active) m_timer->stop();
-//    m_view->setDefaultColor();
-//    if (m_active) m_timer->start();
-//    saveSettings();
-//}
-
-void MainWindow::adjustToMinimalSize() {
-    resize(1,1);
 }
 
 void MainWindow::setInterval(int value) {
@@ -162,7 +145,7 @@ void MainWindow::nextTurn() {
                 timess = rand() % 4 + 1;
                 if (timess == 1){
                     qDebug()<<nextState[x][y];
-                    nextState[x][y] = 1;
+                    nextState[x][y] = color;
                 }
             }
             if (n == 2 ){

@@ -36,7 +36,6 @@ GraphicsViewer::GraphicsViewer(int amountWidth,int amountHeight,int width,int he
         for (int y = 0; y < m_amountHeight; y++) {
             line << m_scene->addRect(m_width*x,m_height*y,m_width,m_height,QPen(),QBrush(m_inactiveColor,Qt::SolidPattern));
             stateLine << 0;
-//            stateLine = 0;
         }
         m_grid << line;
         m_state << stateLine;
@@ -92,7 +91,7 @@ void GraphicsViewer::newRecoveredColor() {
 
 void GraphicsViewer::setDefaultColor() {
     m_activeColor = QColor("red");
-    m_inactiveColor = QColor("white");
+    m_inactiveColor = QColor("black");
     m_recoveredColor = QColor("blue");
     for (int y = 0; y < m_amountHeight; y++)
         for (int x = 0; x < m_amountWidth; x++)
