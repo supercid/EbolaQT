@@ -3,6 +3,7 @@
 #include "time.h"
 #include <QDebug>
 
+
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings(qApp->organizationName(),qApp->applicationName());
 
@@ -144,8 +145,7 @@ void MainWindow::nextTurn() {
             if (n == 1){
                 timess = rand() % 4 + 1;
                 if (timess == 1){
-                    qDebug()<<nextState[x][y];
-                    nextState[x][y] = color;
+                    nextState[x][y] = 1;
                 }
             }
             if (n == 2 ){
@@ -178,37 +178,14 @@ void MainWindow::nextTurnMedicine() {
     //    0 is infected
     //    1 is Susceptible/Alive
     //    2 is Recovered
-//    int timess = 0;
     for (int y = 0; y < m_view->height(); y++)
         for (int x = 0; x < m_view->width(); x++) {
             if(nextState[x][y] == 0){
                 int n = numberOfNeighboor(x,y,m_view->state());
-//                if (n == 1){
-//                    timess = rand() % 4 + 1;
-//                    if (timess == 1){
-//                        nextState[x][y] = 2;
-//                    }
-//                }
-//                if (n == 2 ){
-//                    timess = rand() % 4 + 1;
-//                    if (timess == 1 || timess == 2 ){
-//                        nextState[x][y] = 2;
-//                    }
-//                }
-//                if (n == 3 ){
-//                    timess = rand() % 4 + 1;
-//                    if (timess == 1 || timess == 2 || timess == 3){
-//                        nextState[x][y] = 2;
-//                    }
-//                }
                 if (n==1 || n==2 || n==3 || n == 4 ){
                     nextState[x][y] = 2;
                 }
             }
-//            if(nextState[x][y] == 0){
-//                nextState[x][y] = 1;
-//            }
-
         }
 
     for (int y = 0; y < m_view->height(); y++)
@@ -219,16 +196,17 @@ void MainWindow::nextTurnMedicine() {
         }
 }
 
-
 int MainWindow::numberOfNeighboor(int rx,int ry,const QList<QList<int> >& state) {
     int n = 0;
     for (int y = ry-1; y < ry+2; y++)
         for (int x = rx-1; x < rx+2; x++) {
             if (x == rx && y == ry)
                 continue;
-            if (x >= 0 && x < m_view->width() && y >= 0 && y < m_view->height())
-                if (state[x][y])
+            if (x >= 0 && x < m_view->width() && y >= 0 && y < m_view->height()){
+                if (state[x][y]){
                     n++;
+                }
+            }
         }
     return n;
 }

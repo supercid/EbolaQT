@@ -25,7 +25,8 @@
         Q_OBJECT
         public :
             MainWindow(QWidget* parent = 0);
-        public slots :
+
+    public slots :
             void saveSettings();
             void setInterval(int value);
             void stateChange();
@@ -35,6 +36,7 @@
             void callNAColor();
             void callAColor();
             void callRColor();
+
         private :
             int numberOfNeighboor(int x,int y,const QList<QList<int> >& state);
         private :
